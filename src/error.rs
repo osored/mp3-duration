@@ -30,6 +30,8 @@ pub enum ErrorKind {
     MPEGFrameTooShort,
     #[error("Unexpected IO Error: {0}")]
     IOError(#[source] io::Error),
+    #[error("Overflow")]
+    Overflow,
 }
 
 impl From<io::Error> for ErrorKind {
