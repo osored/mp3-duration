@@ -164,8 +164,12 @@ where
                     let billion = 1_000_000_000;
                     let frames_x_samples = num_frames as u64 * num_samples as u64;
                     let seconds = frames_x_samples / rate;
-                    let nanoseconds = (billion * frames_x_samples) / rate - billion * seconds;
-                    return Ok(Duration::new(seconds, nanoseconds as u32));
+                    if let Some(ns_num) = billion.checked_mul(frames_x_samples) {
+                        let nanoseconds = ns_num / rate - billion * seconds;
+                        return Ok(Duration::new(seconds, nanoseconds as u32));
+                    } else {
+                        return Err(context.error(ErrorKind::Overflow));
+                    };
                 }
             }
 
