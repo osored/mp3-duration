@@ -161,7 +161,7 @@ where
                         | (xing_buffer[10] as u32) << 8
                         | xing_buffer[11] as u32;
                     let rate = sampling_rate as u64;
-                    let billion = 1_000_000_000;
+                    let billion = 1_000_000_000_u64;
                     let frames_x_samples = num_frames as u64 * num_samples as u64;
                     let seconds = frames_x_samples / rate;
                     if let Some(ns_num) = billion.checked_mul(frames_x_samples) {
